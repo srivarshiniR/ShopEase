@@ -24,6 +24,7 @@ const HomePage = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
+      {/* Sticky Search Bar */}
       <Box sx={{ position: 'sticky', top: 70, zIndex: 1, backgroundColor: 'white', padding: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
           <Typography variant="h5" sx={{ flex: 1, textAlign: "left", fontWeight: 'bold' }}>
@@ -32,7 +33,7 @@ const HomePage = () => {
 
           {/* Search Bar */}
           <TextField
-            placeholder="Search by name"
+            placeholder="Search by name, description"
             variant="outlined"
             fullWidth
             value={searchQuery}
@@ -47,7 +48,7 @@ const HomePage = () => {
             }}
           />
 
-          {/* Toggle Buttons*/}
+          {/* Toggle Buttons */}
           <ToggleButtonGroup
             value={view}
             exclusive
@@ -65,31 +66,27 @@ const HomePage = () => {
       </Box>
 
       {/* Products Display */}
-      {view === 'grid' ? (
-        <Grid container spacing={3}>
-          {/*Grid View*/}
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map(product => (
+      {filteredProducts.length > 0 ? (
+        view === 'grid' ? (
+          <Grid container spacing={3}>
+            {filteredProducts.map(product => (
               <Grid item key={product._id} xs={12} sm={6} md={3}>
                 <ProductCard product={product} />
               </Grid>
-            ))
-          ) : (
-            <Typography variant="h6">No products found</Typography>
-          )}
-        </Grid>
-      ) : (
-        <Box>
-          {/*List View*/}
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map(product => (
+            ))}
+          </Grid>
+        ) : (
+          <Box>
+            {filteredProducts.map(product => (
               <Box key={product._id} sx={{ marginBottom: 2 }}>
                 <ProductCard product={product} />
               </Box>
-            ))
-          ) : (
-            <Typography variant="h6">No products found</Typography>
-          )}
+            ))}
+          </Box>
+        )
+      ) : (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          <Typography variant="body1">No products found</Typography>
         </Box>
       )}
     </Box>
